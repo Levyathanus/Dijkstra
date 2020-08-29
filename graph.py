@@ -1,11 +1,11 @@
 #!/bin/python3
 
-# G = (N, E)         | Simple graph object
-# N = (A, B, C, ...) | A = (1, "NodeA"), B = (2, "NodeB")
-# E = (AB, BC, ...)  | AB = (1, 2, weight, 1) -> directed graph from node 1 to node 2
-#                    | AB = (1, 2, weight, 0) -> not directed graph
-#                    | AB = (1, 2, weight, -1) directed graph from node 2 to node 1, equivalent to:
-#                    | BA = (2, 1, weight, 1)
+# G = (N, E)             | Simple graph object
+# N = (A, B, C, D, ...)  | A = 1:"NodeA", B = 2:"NodeB"
+# E = (AB, BC, AC, ...)  | AB = (A, B, weight, 1) -> directed graph from node 1 to node 2
+#                        | AB = (A, B, weight, 0) -> not directed graph
+#                        | AB = (A, B, weight, -1) directed graph from node 2 to node 1, equivalent to:
+#                        | BA = (B, A, weight, 1)
 
 class Node:
     # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
@@ -110,6 +110,18 @@ class Graph:
             print("Edges not empty!")
         else:
             print("Not enough nodes!")
+
+    def is_weighted(self):
+        if self.__edge_number == 0:
+            return False
+        check = True
+        for edge in self.edges:
+            if edge.weight == float('inf'):
+                check = False
+                break
+        return check
+
+    #TODO: def is_connected(self):
 
 
 if __name__ == "__main__":
