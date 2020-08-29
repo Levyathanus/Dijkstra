@@ -21,7 +21,7 @@ class Edge:
         self.direction = direction
 
 class Graph:
-    def __init__(self, name = "Graph", nodes = [], edges = 0):
+    def __init__(self, name = "Graph", nodes = [], edges = []):
         self.name = name
         self.nodes = nodes
         self.edges = edges
@@ -33,11 +33,15 @@ class Graph:
             self.root = node
 
     def createUndirectedEdges(self, weights):
-        if len(self.nodes > 1) and self.edges == []:
+        if len(self.nodes) > 1 and self.edges == []:
             for i in range(self.nodes - 1):
                 XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], 0)
                 self.edges.append(XY)
-
+        elif len(self.nodes) > 1:
+            print("Edges not empty!")
+        else:
+            print("Not enough nodes!")
+            
 
 
 
