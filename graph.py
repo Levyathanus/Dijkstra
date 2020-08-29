@@ -8,13 +8,21 @@
 #                    | BA = (2, 1, weight, 1)
 
 class Node:
-    # unique id (1, 2, ...); 0 for undefined/unknown/test-only node
-    def __init__(self, id = 0, name = "Unknown"):
-        self.id = id
+    # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
+    __id = 0
+    def __init__(self, name = "Unknown", Test = False):
+        if not Test:
+            self.__id = Node.__id + 1
+        else:
+            self.__id = -1
         self.name = name
+    
+    @property
+    def get_id(self):
+        return self.__id
 
 class Edge:
-    def __init__(self, origin = 0, destination = 0, weight = float("inf"), direction = 0):
+    def __init__(self, origin = -1, destination = -1, weight = float("inf"), direction = 0):
         self.origin = origin
         self.destination = destination
         self.weight = weight
@@ -72,4 +80,6 @@ class Graph:
 
 
 if __name__ == "__main__":
+    A = Node("Test", Test = True)
+
     print("Done!")
