@@ -26,23 +26,49 @@ class Graph:
         self.nodes = nodes
         self.edges = edges
         if nodes != []:    
-            self.root = nodes[0]
+            self.__root = nodes[0]
+        self.__node_number = len(nodes)
+        self.__edge_number = len(edges)
 
-    def setRoot(self, node):
+    @property
+    def get_root(self):
+        return self.__root
+
+    @property
+    def get_node_number(self):
+        return self.__node_number
+
+    @property
+    def get_edge_number(self):
+        return self.__edge_number
+    
+    @set_root.setter
+    def set_root(self, node):
         if node in self.nodes:
-            self.root = node
+            self.__root = node
+            return True
+        else:
+            return False
 
-    def createUndirectedEdges(self, weights):
-        if len(self.nodes) > 1 and self.edges == []:
-            for i in range(self.nodes - 1):
+    def create_undirected_edges(self, weights = []):
+        if self.__node_number > 1 and self.__edge_number == 0:
+            for i in range(self.__node_number - 1):
                 XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], 0)
                 self.edges.append(XY)
-        elif len(self.nodes) > 1:
+        elif self.__node_number > 1:
             print("Edges not empty!")
         else:
             print("Not enough nodes!")
-            
 
+    def create_edges(self, weights = [], directions = []):
+        if self.__node_number > 1 and self.__edge_number == 0:
+            for i in range(self.__node_number - 1):
+                XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], directions[i])
+                self.edges.append(XY)
+        elif self.__node_number > 1:
+            print("Edges not empty!")
+        else:
+            print("Not enough nodes!")
 
 
 if __name__ == "__main__":
