@@ -101,6 +101,9 @@ class Graph:
         if len(weights) < self.__node_number -1:
             weights.extend(0 for _ in range(self.__node_number - 1))
 
+        if len(directions) < self.__node_number -1:
+            directions.extend(1 for _ in range(self.__node_number - 1))
+
         if self.__node_number > 1 and self.__edge_number == 0:
             for i in range(self.__node_number - 1):
                 XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], directions[i])
