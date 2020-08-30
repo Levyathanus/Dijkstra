@@ -33,13 +33,21 @@ class Edge:
         self.origin = origin
         self.destination = destination
         self.weight = weight
-        self.direction = direction
+        if direction in [-1, 0, 1]:
+            self.direction = direction
+        else:
+            direction = 0
 
     def __repr__(self):
         return "Edge"
     
     def __str__(self):
-        return "Edge between: " + str(self.origin) + " and " + str(self.destination)
+        if self.direction == 0:
+            return "Edge between " + str(self.origin) + " and " + str(self.destination)
+        elif self.direction == 1:
+            return "Edge from " + str(self.origin) + " to " + str(self.destination)
+        else:
+            return "Edge from " + str(self.destination) + " to " + str(self.origin)
 
 class Graph:
     def __init__(self, name = "Graph", nodes = [], edges = []):
@@ -57,6 +65,23 @@ class Graph:
     def __str__(self):
         return self.name
 
+    def adjacency_matrix(self):
+        matrix = [[0 for i in range(self.__node_number)] for j in range(self.__node_number)]
+        
+        for i in range(self.__node_number):
+            for j in range(self.__node_number):
+                for k in range(self.__edge_number):
+                    if self.edges[k].origin == self.nodes[i] and self.edges[k].destination == self.nodes[j]:
+                        if self.edges[k].direction == 1:
+                            matrix[i][j] = 1
+                        elif self.edges[k].direction == 0:
+                            matrix[i][j] = 1
+                            matrix[j][i] = 1
+                        elif self.edges[k].direction == -1:
+                            matrix[j][i] = 1
+
+        return matrix
+                
     def summarize(self):
         print("Graph name: " + self.name)
         print("Number of nodes: " + str(self.__node_number))
@@ -84,7 +109,7 @@ class Graph:
             return False
 
     def create_undirected_edges(self, weights = []):
-        if len(weights) < self.__node_number -1:
+        if len(weights) < self.__node_number - 1:
             weights.extend(0 for _ in range(self.__node_number - 1))
 
         if self.__node_number > 1 and self.__edge_number == 0:
@@ -92,16 +117,16 @@ class Graph:
                 XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], 0)
                 self.edges.append(XY)
             self.__edge_number = self.__node_number - 1
-        elif self.__node_number > 1:
+        elif self.__edge_number >= 1:
             print("Edges not empty!")
         else:
             print("Not enough nodes!")
 
     def create_edges(self, weights = [], directions = []):
-        if len(weights) < self.__node_number -1:
+        if len(weights) < self.__node_number - 1:
             weights.extend(0 for _ in range(self.__node_number - 1))
 
-        if len(directions) < self.__node_number -1:
+        if len(directions) < self.__node_number - 1:
             directions.extend(1 for _ in range(self.__node_number - 1))
 
         if self.__node_number > 1 and self.__edge_number == 0:
@@ -109,7 +134,7 @@ class Graph:
                 XY = Edge(self.nodes[i], self.nodes[i+1], weights[i], directions[i])
                 self.edges.append(XY)
             self.__edge_number = self.__node_number - 1
-        elif self.__node_number > 1:
+        elif self.__edge_number >= 1:
             print("Edges not empty!")
         else:
             print("Not enough nodes!")
@@ -126,6 +151,8 @@ class Graph:
 
     #TODO: def is_connected(self):
 
+def print_matrix(matrix):
+    print('\n'.join([' '.join(['{}'.format(item) for item in row]) for row in matrix]))
 
 if __name__ == "__main__":
     a = Node("Test", Test = True)
@@ -140,4 +167,5 @@ if __name__ == "__main__":
     G.create_undirected_edges()
     G.summarize()
     print(G.edges[0])
+    print_matrix(G.adjacency_matrix())
     print("Done!")
