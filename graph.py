@@ -144,7 +144,7 @@ class Graph:
             return False
         check = True
         for edge in self.edges:
-            if edge.weight == float('inf'):
+            if edge.weight == float('inf') or edge.weight == 0:
                 check = False
                 break
         return check
@@ -168,4 +168,5 @@ if __name__ == "__main__":
     G.summarize()
     print(G.edges[0])
     print_matrix(G.adjacency_matrix())
+    print(G.is_weighted())
     print("Done!")
