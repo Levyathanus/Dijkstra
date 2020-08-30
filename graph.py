@@ -183,13 +183,14 @@ def create_graph(name = "Graph", adj_matrix = [], w_matrix = []):
     for i in range(n):
             V = Node("Node_" + str(i))
             nodes.append(V)
-    directed = True
+    directed = False
     for i in range(n):
         for j in range(n):
             if adj_matrix[i][j] != adj_matrix[j][i]:
-                directed = False
+                directed = True
     if p == 0 or p != n:
-        print("Weight matrix format is not valid, ignoring it...")
+        if p != 0:
+            print("Weight matrix format is not valid, ignoring it...")
         for i in range(n):
             for j in range(n):
                 if adj_matrix[i][j] == 1:
@@ -214,33 +215,32 @@ def create_graph(name = "Graph", adj_matrix = [], w_matrix = []):
 
 
 if __name__ == "__main__":
-    #a = Node("Test", Test = True)
-    #b = Node("Node_1_b")
-    #c = Node("Node_2_c")
-    #print(a)
-    #print(b)
-    #print(c)
-
-    #nodes = [b, c]
-    #G = Graph("TestGraph", nodes)
-    #G.create_undirected_edges()
-    #G.summarize()
-    #print(G.edges[0])
-    #print_matrix(G.adjacency_matrix())
-    #print(G.is_weighted())
-    #P = G.weights_matrix()
-    #print(P)
-    wiki_adj_matrix = [[0,1,0,0,1,0,0],
-                       [1,0,1,1,0,0,0],    
-                       [0,1,0,0,0,0,1],
-                       [0,1,0,0,1,1,0],
-                       [1,0,0,1,0,0,0],
-                       [0,0,0,1,1,0,1],
-                       [0,0,1,0,0,1,0]]
+    wiki_adj_matrix = [[0, 1, 0, 0, 1, 0, 0],
+                       [1, 0, 1, 1, 0, 0, 0],
+                       [0, 1, 0, 0, 0, 0, 1],
+                       [0, 1, 0, 0, 1, 1, 0],
+                       [1, 0, 0, 1, 0, 1, 0],
+                       [0, 0, 0, 1, 1, 0, 1],
+                       [0, 0, 1, 0, 0, 1, 0]]
+        
+    wiki_w_matrix = [[0, 2, 0, 0, 8, 0, 0],
+                    [2, 0, 6, 2, 0, 0, 0],
+                    [0, 6, 0, 0, 0, 0, 5],
+                    [0, 2, 0, 0, 2, 9, 0],
+                    [8, 0, 0, 2, 0, 3, 0],
+                    [0, 0, 0, 9, 3, 0, 1],
+                    [0, 0, 5, 0, 0, 1, 0]]
 
     print_matrix(wiki_adj_matrix)
-    G = create_graph(name = "WikiGraph", adj_matrix = wiki_adj_matrix)
-    print(G.is_weighted())
-    print(G)
-    G.summarize()
+    print_matrix(wiki_w_matrix)
+    G1 = create_graph(name = "WikiGraph1", adj_matrix = wiki_adj_matrix)
+    print(G1.is_weighted())
+    print(G1)
+    G1.summarize()
+    print()
+    G2 = create_graph(name = "WikiGraph2", adj_matrix = wiki_adj_matrix, w_matrix = wiki_w_matrix)
+    print(G2.is_weighted())
+    print(G2)
+    G2.summarize()
+    print_matrix(G1.adjacency_matrix())
     print("Done!")
