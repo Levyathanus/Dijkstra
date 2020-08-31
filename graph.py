@@ -13,14 +13,14 @@ class Node:
     __id = 0
     def __init__(self, name = "Unknown", Test = False):
         if not Test:
-            self.__id = Node.__id + 1
+            self.__id = Node.__id
             Node.__id += 1
         else:
             self.__id = -1
         self.name = name
     
     def __repr__(self):
-        return "Node/Vertex"
+        return str(self.__id) + ":" + self.name
     
     def __str__(self):
         return str(self.__id) + ":" + self.name
