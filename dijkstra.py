@@ -13,38 +13,44 @@ def dijkstra(G, root = None, end = None):
     if root == None:
         root = G.root
     N = [node for node in G.nodes]
-    P = []
+    P = [[] for _ in range(len(G.nodes))]
     D = [0]*len(N)
+    DIST = [0]*len(N)
     d = 0
-    
+
     for j in range(len(N)):
         if N[j] == root:
             D[j] = 0
         else:
             D[j] = INF
-    i = 0
+
     if end is None:
+        end = G.nodes[-1]
         while not empty(N):
-            print(N, D)
+            #print(N, D)
             d = min(D)
             u = N[D.index(d)]
             x = N.index(u)
-            
+            if D[x] == INF:
+                break
             V = neighbors(u, G) 
             #print(V, u, d)
             for v in V:
                 if v in N:
                     alt = D[x] + dist(u, v, G)
-                    print(D[x], alt)
+                    #print(D[x], alt)
                     if alt < D[N.index(v)]:
                         D[N.index(v)] = alt
-                        P.append(u)
-                        print(P)
+                        if P.count(u) == 0:
+                            P[N.index(v)] = u
+                        DIST[N.index(v)] = D[x]
             N[x] = []
             D[x] = INF
-            i += 1
-            print()
-    return P, D
+            #print()
+    P, DIST = dual_filter(P, DIST)
+    DIST.insert(0, 0)
+    P.append(end)
+    return P, DIST
 
 def dist(u, v, G):
     for edge in G.edges:
@@ -66,7 +72,15 @@ def empty(N):
             return False
     return True
     
-
+def dual_filter(l1, l2):
+    if len(l1) == len(l2):
+        for i in range(len(l1)):
+            if l1[i] == []:
+                l2[i] = []
+        return list(filter(None, l1)), list(filter(None, l2))
+    else:
+        return None
+    
 if __name__ == "__main__":
     wiki_adj_matrix = [[0, 1, 0, 0, 1, 0, 0],
                        [1, 0, 1, 1, 0, 0, 0],
@@ -87,5 +101,5 @@ if __name__ == "__main__":
     #G1 = graph.create_graph(name="WikiGraph1", adj_matrix=wiki_adj_matrix)
     G2 = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
     #G2.summarize()
-    ACCM = dijkstra(G2)
-    #print(ACCM)
+    ACCM, D = dijkstra(G2)
+    print(ACCM, D)
