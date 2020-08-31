@@ -1,5 +1,4 @@
 import graph
-import copy
 INF = float("inf")
 # G = (N, E)
 # P = Set of permanently labeled nodes (root-node distance is defined)
@@ -23,23 +22,28 @@ def dijkstra(G, root = None, end = None):
             D[j] = 0
         else:
             D[j] = INF
-   
+    i = 0
     if end is None:
-        #while not empty(N):
-            #print(N, D)
+        while not empty(N):
+            print(N, D)
             d = min(D)
             u = N[D.index(d)]
             x = N.index(u)
             
             V = neighbors(u, G) 
-            print(V, u, d)
+            #print(V, u, d)
             for v in V:
                 if v in N:
                     alt = D[x] + dist(u, v, G)
+                    print(D[x], alt)
                     if alt < D[N.index(v)]:
                         D[N.index(v)] = alt
                         P.append(u)
+                        print(P)
             N[x] = []
+            D[x] = INF
+            i += 1
+            print()
     return P, D
 
 def dist(u, v, G):
@@ -61,6 +65,7 @@ def empty(N):
         if item != []:
             return False
     return True
+    
 
 if __name__ == "__main__":
     wiki_adj_matrix = [[0, 1, 0, 0, 1, 0, 0],
@@ -81,6 +86,6 @@ if __name__ == "__main__":
 
     #G1 = graph.create_graph(name="WikiGraph1", adj_matrix=wiki_adj_matrix)
     G2 = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
-    G2.summarize()
+    #G2.summarize()
     ACCM = dijkstra(G2)
-    print(ACCM)
+    #print(ACCM)
