@@ -7,6 +7,7 @@
 #                        | AB = (A, B, weight, -1) directed graph from node 2 to node 1, equivalent to:
 #                        | BA = (B, A, weight, 1)
 
+INF = float("inf")
 class Node:
     # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
     __id = 0
@@ -29,7 +30,7 @@ class Node:
         return self.__id
 
 class Edge:
-    def __init__(self, origin = None, destination = None, weight = float("inf"), direction = 0):
+    def __init__(self, origin = None, destination = None, weight = INF, direction = 0):
         self.origin = origin
         self.destination = destination
         self.weight = weight
@@ -102,7 +103,7 @@ class Graph:
 
         return matrix
 
-    def weights_matrix(self):
+    def weight_matrix(self):
         if not self.is_weighted():
             return None
         matrix = [[0 for i in range(self.__node_number)] for j in range(self.__node_number)]
@@ -120,8 +121,7 @@ class Graph:
                             matrix[j][i] = self.edges[k].weight
     
         return matrix
-        
-                
+              
     def summarize(self):
         print("Graph name: " + self.name)
         print("Number of nodes: " + str(self.__node_number))
@@ -164,7 +164,7 @@ class Graph:
             return False
         check = True
         for edge in self.edges:
-            if edge.weight == float('inf') or edge.weight <= 0:
+            if edge.weight == INF or edge.weight <= 0:
                 check = False
                 break
         return check
@@ -223,13 +223,13 @@ if __name__ == "__main__":
                        [0, 0, 0, 1, 1, 0, 1],
                        [0, 0, 1, 0, 0, 1, 0]]
         
-    wiki_w_matrix = [[0, 2, 0, 0, 8, 0, 0],
-                    [2, 0, 6, 2, 0, 0, 0],
-                    [0, 6, 0, 0, 0, 0, 5],
-                    [0, 2, 0, 0, 2, 9, 0],
-                    [8, 0, 0, 2, 0, 3, 0],
-                    [0, 0, 0, 9, 3, 0, 1],
-                    [0, 0, 5, 0, 0, 1, 0]]
+    wiki_w_matrix = [[INF, 2, INF, INF, 8, INF, INF],
+                    [2, INF, 6, 2, INF, INF, INF],
+                    [INF, 6, INF, INF, INF, INF, 5],
+                    [INF, 2, INF, INF, 2, 9, INF],
+                    [8, INF, INF, 2, INF, 3, INF],
+                    [INF, INF, INF, 9, 3, INF, 1],
+                    [INF, INF, 5, INF, INF, 1, INF]]
 
     print_matrix(wiki_adj_matrix)
     print_matrix(wiki_w_matrix)
