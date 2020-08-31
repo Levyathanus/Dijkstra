@@ -44,11 +44,12 @@ def dijkstra(G, root = None, end = None):
                         if P.count(u) == 0:
                             P[N.index(v)] = u
                         DIST[N.index(v)] = D[x]
+            end_dist = D[x]
             N[x] = []
             D[x] = INF
-            #print()
     P, DIST = dual_filter(P, DIST)
     DIST.insert(0, 0)
+    DIST.append(end_dist)
     P.append(end)
     return P, DIST
 
@@ -79,7 +80,7 @@ def dual_filter(l1, l2):
                 l2[i] = []
         return list(filter(None, l1)), list(filter(None, l2))
     else:
-        return None
+        return l1, l2
     
 if __name__ == "__main__":
     wiki_adj_matrix = [[0, 1, 0, 0, 1, 0, 0],
