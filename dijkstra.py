@@ -103,8 +103,24 @@ if __name__ == "__main__":
                      [INF, INF, INF, 9, 3, INF, 1],
                      [INF, INF, 5, INF, INF, 1, INF]]
 
-    G = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
-    #G.summarize()
+
+    slide_adj_matrix = [[0, 1, 0, 0, 0, 1],
+                        [1, 0, 1, 0, 1, 1],
+                        [0, 1, 0, 1, 0, 0],
+                        [0, 0, 1, 0, 1, 1],
+                        [0, 1, 0, 1, 0, 1],
+                        [1, 1, 0, 1, 1, 0]]
+    
+    slide_w_matrix = [[INF, 1, INF, INF, INF, 3],
+                     [1, INF, 3, INF, 5, 1],
+                     [INF, 3, INF, 2, INF, INF],
+                     [INF, INF, 2, INF, 1, 6],
+                     [INF, 5, INF, 1, INF, 2],
+                      [3, 1, INF, 6, 2, INF]]
+    
+    #G = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
+    G = graph.create_graph(name="SlideGraph", adj_matrix=slide_adj_matrix, w_matrix=slide_w_matrix)
+    G.summarize()
     k = input()
     h = input()
     if k == '':
