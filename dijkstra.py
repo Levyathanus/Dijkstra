@@ -10,8 +10,10 @@ def dijkstra(G, root = None, end = None):
     if not G.is_weighted():
         print("Cannot perform Dijkstra algorithm on a not weighted graph!")
         return None
-    if root == None:
+    if root is None:
         root = G.root
+    if end is None:
+        end = G.nodes[-1]
     N = [node for node in G.nodes]
     P = [[] for _ in range(len(G.nodes))]
     D = [0]*len(N)
@@ -23,30 +25,32 @@ def dijkstra(G, root = None, end = None):
             D[j] = 0
         else:
             D[j] = INF
-
-    if end is None:
-        end = G.nodes[-1]
-        while not empty(N):
-            #print(N, D)
-            d = min(D)
-            u = N[D.index(d)]
-            x = N.index(u)
-            if D[x] == INF:
-                break
-            V = neighbors(u, G) 
-            #print(V, u, d)
-            for v in V:
-                if v in N:
-                    alt = D[x] + dist(u, v, G)
-                    #print(D[x], alt)
-                    if alt < D[N.index(v)]:
-                        D[N.index(v)] = alt
-                        if P.count(u) == 0:
-                            P[N.index(v)] = u
-                        DIST[N.index(v)] = D[x]
+    
+    while not empty(N):
+        #print(N, D)
+        d = min(D)
+        u = N[D.index(d)]
+        x = N.index(u)
+        if u == end:
             end_dist = D[x]
-            N[x] = []
-            D[x] = INF
+            break
+        if D[x] == INF:
+            break
+        V = neighbors(u, G)
+        #print(V, u, d)
+        for v in V:
+            if v in N:
+                alt = D[x] + dist(u, v, G)
+                #print(D[x], alt)
+                if alt < D[N.index(v)]:
+                    D[N.index(v)] = alt
+                    if P.count(u) == 0:
+                        P[N.index(v)] = u
+                    DIST[N.index(v)] = D[x]
+        #end_dist = D[x]
+        N[x] = []
+        D[x] = INF
+
     P, DIST = dual_filter(P, DIST)
     DIST.insert(0, 0)
     DIST.append(end_dist)
@@ -102,5 +106,20 @@ if __name__ == "__main__":
     #G1 = graph.create_graph(name="WikiGraph1", adj_matrix=wiki_adj_matrix)
     G2 = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
     #G2.summarize()
-    ACCM, D = dijkstra(G2)
+    k = input()
+    h = input()
+    if k == '':
+        if h == '':
+           ACCM, D = dijkstra(G2)
+        else:
+            h = int(h)
+            ACCM, D = dijkstra(G2, None, end=G2.nodes[h])
+    elif h == '':
+        k = int(k)
+        ACCM, D = dijkstra(G2, root=G2.nodes[k])
+    else:
+        k = int(k)
+        h = int(h)
+        ACCM, D = dijkstra(G2, root=G2.nodes[k], end=G2.nodes[h])
+    
     print(ACCM, D)
