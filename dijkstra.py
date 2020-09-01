@@ -103,23 +103,22 @@ if __name__ == "__main__":
                      [INF, INF, INF, 9, 3, INF, 1],
                      [INF, INF, 5, INF, INF, 1, INF]]
 
-    #G1 = graph.create_graph(name="WikiGraph1", adj_matrix=wiki_adj_matrix)
-    G2 = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
-    #G2.summarize()
+    G = graph.create_graph(name="WikiGraph2", adj_matrix=wiki_adj_matrix, w_matrix=wiki_w_matrix)
+    #G.summarize()
     k = input()
     h = input()
     if k == '':
         if h == '':
-           ACCM, D = dijkstra(G2)
+           ACCM, D = dijkstra(G)
         else:
             h = int(h)
-            ACCM, D = dijkstra(G2, None, end=G2.nodes[h])
+            ACCM, D = dijkstra(G, None, end=G.nodes[h])
     elif h == '':
         k = int(k)
-        ACCM, D = dijkstra(G2, root=G2.nodes[k])
+        ACCM, D = dijkstra(G, root=G.nodes[k])
     else:
         k = int(k)
         h = int(h)
-        ACCM, D = dijkstra(G2, root=G2.nodes[k], end=G2.nodes[h])
+        ACCM, D = dijkstra(G, root=G.nodes[k], end=G.nodes[h])
     
     print(ACCM, D)
