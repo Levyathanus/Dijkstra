@@ -6,9 +6,9 @@ INF = float("inf")
 # G = (N, E): input graph (refer to graph.py). It must be a positive weighted graph!
 # root: starting node
 # end: arrival node
-# P: ordered list of connected nodes from root to end minimizing the total path cost (#1 returned value)
+# P: ordered list of connected nodes from root to end minimizing the total path cost ($1 returned value)
 # D: distances between the current node and its neighbors (changing labels)
-# DIST: definitive labels for each node of the P list (costs) (#2 returned value)
+# DIST: definitive labels for each node of the P list (costs) ($2 returned value)
 # d: minimum distance from the previous node
 
 def dijkstra(G, root = None, end = None):
@@ -58,6 +58,8 @@ def dijkstra(G, root = None, end = None):
     P.append(end)
     return P, DIST
 
+# Return the weight of the edge (if exists) between the given nodes #u# and #v#
+# belonging to the same graph #G#
 def dist(u, v, G):
     for edge in G.edges:
         if edge.origin == u and edge.destination == v:
@@ -65,8 +67,8 @@ def dist(u, v, G):
     print("No edge found between " + str(u) + " and " + str(v))
     return 0
 
-# Find the neighbors of a given node (u) in the given graph (G)
-# neighbors nodes are defined as nodes which are linked with u (with a weighted edge) and are not u itself 
+# Find the neighbors of a given node #u# in the given graph #G#
+# neighbors nodes are defined as nodes which are linked with #u# (with a weighted edge) and are not #u# itself 
 def neighbors(u, G):
     V = []
     for edge in G.edges:
@@ -74,7 +76,7 @@ def neighbors(u, G):
             V.append(edge.destination)
     return V
 
-# For my implementation of Dijkstra algorithm, the list of nodes (N) is empty
+# For my implementation of Dijkstra algorithm, the list of nodes #N# is empty
 # when all of its elements are empty lists <-> []
 def empty(N):
     for item in N:
@@ -82,8 +84,8 @@ def empty(N):
             return False
     return True
 
-# The dual_filter function deletes empty lists from the first list (l1) and
-# the same index value from the second list (l2) (l1 and l2 must be of the same length)   
+# The dual_filter function deletes empty lists from the first list #l1# and
+# the same index value from the second list #l2# (#l1# and #l2# must be of the same length)   
 def dual_filter(l1, l2):
     if len(l1) == len(l2):
         for i in range(len(l1)):
