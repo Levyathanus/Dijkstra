@@ -8,6 +8,7 @@ INF = float("inf")
 #                        | AB = (A, B, weight, 0) -> not directed graph
 #                        | AB = (A, B, weight, -1) directed graph from node 2 to node 1, equivalent to:
 #                        | BA = (B, A, weight, 1)
+
 class Node:
     # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
     __id = 0
