@@ -1,10 +1,13 @@
 import graph
 INF = float("inf")
-# G = (N, E)
-# P = Set of permanently labeled nodes (root-node distance is defined)
-# d[i][j] = cost/weight of the direct link between i and j nodes (d[i][j] = INF if i and j haven't a direct link) (<-> weight matrix)
-# D[j] = total cost/weight of the path from root to the j node
 
+# G = (N, E): input graph (refer to graph.py). It must be a weighted graph!
+# root: starting node
+# end: arrival node
+# P: ordered list of connected nodes from root to end minimizing the total path cost (#1 returned value)
+# D: distances between the current node and its neighbors (changing labels)
+# DIST: definitive labels for each node of the P list (costs) (#2 returned value)
+# d: minimum distance from the previous node
 
 def dijkstra(G, root = None, end = None):
     if not G.is_weighted():
@@ -27,7 +30,6 @@ def dijkstra(G, root = None, end = None):
             D[j] = INF
     
     while not empty(N):
-        #print(N, D)
         d = min(D)
         u = N[D.index(d)]
         x = N.index(u)
@@ -37,17 +39,14 @@ def dijkstra(G, root = None, end = None):
         if D[x] == INF:
             break
         V = neighbors(u, G)
-        #print(V, u, d)
         for v in V:
             if v in N:
                 alt = D[x] + dist(u, v, G)
-                #print(D[x], alt)
                 if alt < D[N.index(v)]:
                     D[N.index(v)] = alt
                     if P.count(u) == 0:
                         P[N.index(v)] = u
                     DIST[N.index(v)] = D[x]
-        #end_dist = D[x]
         N[x] = []
         D[x] = INF
 

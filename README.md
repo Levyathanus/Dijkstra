@@ -1,2 +1,2 @@
 # Dijkstra
-Trying to implement the Dijkstra algorithm
+Implementing the Dijkstra algorithm on simple graphs.
