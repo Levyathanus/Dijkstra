@@ -1,4 +1,6 @@
-#!/bin/python3
+#!/usr/bin/env python3
+
+INF = float("inf")
 
 # G = (N, E)             | Simple graph object
 # N = (A, B, C, D, ...)  | A = 1:"NodeA", B = 2:"NodeB"
@@ -6,8 +8,6 @@
 #                        | AB = (A, B, weight, 0) -> not directed graph
 #                        | AB = (A, B, weight, -1) directed graph from node 2 to node 1, equivalent to:
 #                        | BA = (B, A, weight, 1)
-
-INF = float("inf")
 class Node:
     # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
     __id = 0
