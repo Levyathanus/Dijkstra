@@ -107,7 +107,7 @@ class Graph:
     def weight_matrix(self):
         if not self.is_weighted():
             return None
-        matrix = [[0 for i in range(self.__node_number)] for j in range(self.__node_number)]
+        matrix = [[INF for i in range(self.__node_number)] for j in range(self.__node_number)]
 
         for i in range(self.__node_number):
             for j in range(self.__node_number):
