@@ -2,13 +2,9 @@
 
 INF = float("inf")
 
-# G = (N, E)             | Simple graph object
-# N = (A, B, C, D, ...)  | A = 1:"NodeA", B = 2:"NodeB"
-# E = (AB, BC, AC, ...)  | AB = (A, B, weight, 1) -> directed graph from node 1 to node 2
-#                        | AB = (A, B, weight, 0) -> not directed graph
-#                        | AB = (A, B, weight, -1) directed graph from node 2 to node 1, equivalent to:
-#                        | BA = (B, A, weight, 1)
-
+# Simple Node/Vertex of graph implementation:
+# each node is defined by: a unique id (autoincremented),
+# and a name; the #Test# parameter serves to set a node with __id = -1
 class Node:
     # unique id (1, 2, ...); -1 for undefined/unknown/test-only node
     __id = 0
@@ -30,6 +26,10 @@ class Node:
     def get_id(self):
         return self.__id
 
+# Simple Edge of graph implementation:
+# each edge is defined by: its #origin# node,
+# its #destination# node, its #weight# (cost) and
+# its #direction# (further explanation @line 54)
 class Edge:
     def __init__(self, origin = None, destination = None, weight = INF, direction = 0):
         self.origin = origin
@@ -51,6 +51,12 @@ class Edge:
         else:
             return "Edge from " + str(self.destination) + " to " + str(self.origin)
 
+# G = (N, E)             | Simple graph object
+# N = (A, B, C, D, ...)  | A = 1:"NodeA", B = 2:"NodeB"
+# E = (AB, BC, AC, ...)  | AB = (A, B, weight, 1) -> directed graph from node A to node B
+#                        | AB = (A, B, weight, 0) -> not directed graph
+#                        | AB = (A, B, weight, -1) directed graph from node B to node A, equivalent to:
+#                        | BA = (B, A, weight, 1)
 class Graph:
     def __init__(self, name = "Graph", nodes = [], edges = []):
         self.name = name
@@ -129,6 +135,8 @@ class Graph:
         print("Number of edges: " + str(self.__edge_number))
         print("Current root node: " + str(self.__root))
 
+    # Create undirected weighted (optional) edges between nodes following 
+    # the positional order in the #self.nodes# list
     def create_undirected_edges(self, weights = []):
         if len(weights) < self.__node_number - 1:
             weights.extend(0 for _ in range(self.__node_number - 1))
@@ -143,6 +151,8 @@ class Graph:
         else:
             print("Not enough nodes!")
 
+    # Create directed weighted (optional) edges between nodes following
+    # the positional order in the #self.nodes# list
     def create_edges(self, weights = [], directions = []):
         if len(weights) < self.__node_number - 1:
             weights.extend(0 for _ in range(self.__node_number - 1))
@@ -160,6 +170,8 @@ class Graph:
         else:
             print("Not enough nodes!")
 
+    # Return True if the graph is positive weighted
+    # <-> all edges have a weight/cost between 0 and +INF
     def is_weighted(self):
         if self.__edge_number == 0:
             return False
@@ -170,9 +182,11 @@ class Graph:
                 break
         return check
 
+# Print a generic matrix (list of lists) in a more readable format
 def print_matrix(matrix):
     print('\n'.join([' '.join(['{}'.format(item) for item in row]) for row in matrix]))
 
+# Create a Graph istance given its adjacency matrix (#adj_matrix#) and its weight matrix (#w_matrix#) (optional)
 def create_graph(name = "Graph", adj_matrix = [], w_matrix = []):
     n = len(adj_matrix)
     if n == 0 or n != len(adj_matrix[0]):
@@ -214,7 +228,7 @@ def create_graph(name = "Graph", adj_matrix = [], w_matrix = []):
 
     return Graph(name, nodes, edges)
 
-
+# Test __main__
 if __name__ == "__main__":
     wiki_adj_matrix = [[0, 1, 0, 0, 1, 0, 0],
                        [1, 0, 1, 1, 0, 0, 0],
